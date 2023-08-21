@@ -46,7 +46,7 @@ window.onload = () => {
         let heading = document.querySelector('h1');
         heading.textContent = `Hello ${getCookie('name')}`
     }
-    if (localStorage.counter == "NaN") {
+    if (localStorage.counter == "NaN" || localStorage.counter === undefined) {
         localStorage.counter = 0;
         console.log('counter has been made and = ' + localStorage.counter);
     } else {
@@ -111,9 +111,17 @@ document.addEventListener('click', (ele) => {
     // check if the element id the delete button
     if (ele.target.className === 'delete-button') {
         // remove the task from local storage
+        let paragraph = document.querySelectorAll('.task p');
         for (let index = 0; index < tasksContainer.children.length; index++) {
             if (tasksContainer.children[index] === ele.target.parentElement) {
-                localStorage.removeItem(`task${index}`);
+                for (let i = 0; i < localStorage.counter; i++) {
+                    if (localStorage[`task${i}`] === undefined || localStorage[`task${i}`] === null) {
+                        continue;
+                    } else if (localStorage[`task${i}`] === paragraph[index].textContent) {
+                        localStorage.removeItem(`task${i}`);
+                    }
+                }
+                console.log(localStorage[`task${index}`]);
             }
         }
         // remove the task
