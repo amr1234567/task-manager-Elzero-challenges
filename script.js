@@ -65,18 +65,23 @@ for (let index = 0; index < localStorage.counter; index++) {
 
 document.querySelector('button').onclick = () => {
     // add the new task
-    localStorage[`task${localStorage.counter}`] = inputField.value;
-    localStorage.counter = parseInt(localStorage.counter) + 1;
-    inputField.value = '';
+    if (inputField.value !== null && inputField.value !== "") {
+        localStorage[`task${localStorage.counter}`] = inputField.value;
+        localStorage.counter = parseInt(localStorage.counter) + 1;
+        inputField.value = '';
 
-    //reset the tasks
-    let tasks = document.querySelectorAll('.task');
-    tasks.forEach((ele) => { ele.remove() });
-    //add the tasks
-    for (let index = 0; index < localStorage.counter; index++) {
-        if (localStorage[`task${index}`] === undefined) continue;
-        createTask(index);
+        //reset the tasks
+        let tasks = document.querySelectorAll('.task');
+        tasks.forEach((ele) => { ele.remove() });
+        //add the tasks
+        for (let index = 0; index < localStorage.counter; index++) {
+            if (localStorage[`task${index}`] === undefined) continue;
+            createTask(index);
+        }
+    }else{
+        alert("put a task , not empty string dumb ass");
     }
+
 }
 
 
