@@ -26,10 +26,10 @@ let getCookie = cname => {
 }
 
 
-let checkCookies = ()=>{
-    if(getCookie('name') ===""){
+let checkCookies = () => {
+    if (getCookie('name') === "") {
         let name = prompt('Enter Your Name');
-        setCookies('name',name,365);
+        setCookies('name', name, 365);
         return false;
     }
     else return true;
@@ -41,8 +41,10 @@ let inputField = document.querySelector("input[type='text']");
 let tasksContainer = document.querySelector('.tasks');
 
 window.onload = () => {
-    if(!checkCookies()){
+    if (!checkCookies()) {
         checkCookies();
+        let heading = document.querySelector('h1');
+        heading.textContent = `Hello ${getCookie('name')}`
     }
     if (localStorage.counter == "NaN") {
         localStorage.counter = 0;
@@ -54,7 +56,7 @@ window.onload = () => {
 
 // change the heading of the page 
 let heading = document.querySelector('h1');
-heading.textContent= `Hello ${getCookie('name')}`
+heading.textContent = `Hello ${getCookie('name')}`
 // add the tasks to the html content
 for (let index = 0; index < localStorage.counter; index++) {
     if (localStorage[`task${index}`] === undefined) continue;
