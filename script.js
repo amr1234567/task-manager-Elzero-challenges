@@ -1,9 +1,63 @@
+
+// Cookies Code 
+
+let setCookies = (name, value, expireDate) => {
+    let date = new Date();
+    date.setTime(date.getTime() + (expireDate * 24 * 60 * 60 * 1000));
+
+    let exDate = `expires=${date.toUTCString()}`;
+    document.cookie = `${name}=${value};${exDate};path=/`;
+};
+
+let getCookie = cname => {
+    let name = cname + "=";
+    let decodedCookie = decodeURIComponent(document.cookie);
+    let ca = decodedCookie.split(';');
+    for (let i = 0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+}
+
+
+let checkCookies = ()=>{
+    if(getCookie('name') ===""){
+        let name = prompt('Enter Your Name');
+        setCookies('name',name,365);
+        return false;
+    }
+    else return true;
+}
+
+
+
 let inputField = document.querySelector("input[type='text']");
 let tasksContainer = document.querySelector('.tasks');
 
+window.onload = () => {
+    if(!checkCookies()){
+        checkCookies();
+    }
+    if (localStorage.counter == "NaN") {
+        localStorage.counter = 0;
+        console.log('counter has been made and = ' + localStorage.counter);
+    } else {
+        console.log('counter exist and equal ' + localStorage.counter);
+    }
+}
+
+// change the heading of the page 
+let heading = document.querySelector('h1');
+heading.textContent= `Hello ${getCookie('name')}`
 // add the tasks to the html content
 for (let index = 0; index < localStorage.counter; index++) {
-    if (localStorage[`task${index}`] === undefined)continue;
+    if (localStorage[`task${index}`] === undefined) continue;
     createTask(index);
 }
 
@@ -64,3 +118,4 @@ document.addEventListener('click', (ele) => {
         ele.target.parentElement.remove();
     }
 })
+

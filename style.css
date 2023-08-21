@@ -4,6 +4,12 @@
     box-sizing: border-box;
 }
 
+h1{
+    width: 100%;
+    text-align: center;
+    margin: 2rem auto;
+}
+
 form {
     margin: 2rem auto;
     padding: 2rem;
